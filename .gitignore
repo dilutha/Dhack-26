@@ -1,0 +1,343 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Production builds
+.next/
+out/
+build/
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+.grunt
+
+# Bower dependency directory (https://bower.io/)
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+.tscache/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+out
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Storybook build outputs
+.out
+.storybook-out
+storybook-static
+
+# Temporary folders
+tmp/
+temp/
+
+# Logs
+logs
+*.log
+
+# Editor directories and files
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Vercel
+.vercel
+.vercel.json
+
+# Turbo
+.turbo
+
+# Sentry
+.sentryclirc
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+.env*.local
+
+# Prettier
+.prettierignore
+
+# ESLint
+.eslintignore
+
+# TypeScript
+*.tsbuildinfo
+
+# Bundle analyzer
+.next/analyze/
+
+# PWA files
+**/public/sw.js
+**/public/workbox-*.js
+**/public/worker-*.js
+**/public/sw.js.map
+**/public/workbox-*.js.map
+**/public/worker-*.js.map
+
+# Contentlayer
+.contentlayer
+
+# TailwindCSS
+.tailwindcss-cache
+
+# Misc
+*.tgz
+*.tar.gz
+
+# Local development
+.devcontainer/
+docker-compose.override.yml
+
+# Testing
+coverage/
+.nyc_output/
+junit.xml
+
+# Backup files
+*.backup
+*.bak
+*.tmp
+
+# Lock files (keep only one type)
+# yarn.lock  # Uncomment if using npm only
+# package-lock.json  # Uncomment if using yarn only
+
+# Firebase
+.firebase/
+firebase-debug.log
+
+# Supabase
+.supabase/
+
+# Prisma
+prisma/migrations/dev.db*
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# API keys and secrets
+secrets.json
+.secrets
+
+# Analytics
+.analytics
+
+# Monitoring
+.monitoring
+
+# Error tracking
+.sentry-native-metros
+
+# Performance monitoring
+.lighthouse
+
+# A/B testing
+.optimizely
+
+# CDN
+.cdn
+
+# Email templates (if generated)
+email-dist/
+
+# Documentation builds
+docs/build/
+docs/.docusaurus/
+
+# Swagger/OpenAPI
+swagger-ui-dist/
+
+# GraphQL
+.graphqlconfig
+.gqlconfig
+
+# Apollo
+.apollo/
+
+# Relay
+__generated__/
+
+# Expo (if React Native)
+.expo/
+.expo-shared/
+
+# Capacitor
+android/
+ios/
+.capacitor/
+
+# Electron
+electron-dist/
+
+# Desktop apps
+desktop/build/
+
+# Mobile apps
+mobile/build/
+
+# Serverless
+.serverless/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# AWS
+.aws/
+
+# Google Cloud
+.gcloud/
+
+# Azure
+.azure/
+
+# Kubernetes
+.kube/
+
+# Docker
+.dockerignore
+Dockerfile.prod
+docker-compose.prod.yml
+
+# CI/CD
+.github/workflows/*.yml.backup
+.gitlab-ci.yml.backup
+.circleci/config.yml.backup
+
+# Package managers
+.pnp
+.pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Workspace
+.vscode/settings.json.backup
+.idea/workspace.xml.backup
+
+# Benchmarks
+.benchmarks/
+
+# Profiling
+.profile/
+
+# Memory dumps
+*.heapsnapshot
+
+# Chrome extensions (if applicable)
+.crx
+.pem
+
+# Edge extensions (if applicable)
+.appx
+
+# Safari extensions (if applicable)
+.safariextz
+
+# Firefox extensions (if applicable)
+.xpi
+
+# Browser profiles (if testing)
+.selenium/
+.webdriver/
+
+# Visual regression testing
+.chromatic/
+.percy/
+
+# Storybook
+.storybook/public
+
+# SQL files
+*.sql
+!supabase/migrations/*.sql
+!supabase/schema.sql

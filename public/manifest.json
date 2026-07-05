@@ -1,0 +1,53 @@
+{
+  "name": "DHACK'26 - Sri Lanka AI Innovation Hackathon",
+  "short_name": "DHACK'26",
+  "description": "Join DHACK'26, the multi-category AI innovation hackathon for university teams, school students, and ReBrand participants.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F101E",
+  "theme_color": "#FF6B35",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["education", "productivity", "design"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Timeline",
+      "short_name": "Timeline",
+      "description": "Check the event timeline and schedule",
+      "url": "/#timeline",
+      "icons": [
+        {
+          "src": "/favicon.ico",
+          "sizes": "32x32"
+        }
+      ]
+    },
+    {
+      "name": "View Prizes",
+      "short_name": "Prizes",
+      "description": "See the amazing prizes you can win",
+      "url": "/#prizes",
+      "icons": [
+        {
+          "src": "/favicon.ico",
+          "sizes": "32x32"
+        }
+      ]
+    }
+  ]
+}

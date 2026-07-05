@@ -1,0 +1,62 @@
+User-agent: *
+Allow: /
+
+# Block access to API routes
+Disallow: /api/
+
+# Block admin dashboard and all admin pages from being crawled and indexed
+Disallow: /admin/
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /admin/login/
+Disallow: /admin/overview/
+Disallow: /admin/events/
+Disallow: /admin/results/
+Disallow: /admin/submissions/
+
+# Block access to private pages and internal routes
+Disallow: /_next/
+Disallow: /.next/
+Disallow: /auth/
+Disallow: /auth/*
+
+# Block maintenance page from indexing
+Disallow: /maintenance/
+
+# Block any files with sensitive extensions
+Disallow: /*.env
+Disallow: /*.log
+Disallow: /*.sql
+Disallow: /*.json$
+
+# Allow all major search engine bots
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /.next/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /.next/
+
+User-agent: Slurp
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /.next/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /.next/
+
+# Sitemap location
+Sitemap: https://dhack.lk/sitemap.xml
