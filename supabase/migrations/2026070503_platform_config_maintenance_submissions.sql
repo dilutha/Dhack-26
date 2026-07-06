@@ -93,8 +93,20 @@ create unique index if not exists idx_timeline_events_sort_order
   on public.timeline_events(sort_order)
   where is_active = true;
 
+-- NOTE: casting an enum to text (competition_category::text) is only STABLE,
+-- not IMMUTABLE, in Postgres, because enum internal ordering/labels can change.
+-- Index expressions require IMMUTABLE functions, which is what caused:
+--   ERROR: functions in index expression must be marked IMMUTABLE (SQLSTATE 42P17)
+-- Fix: wrap the enum->text conversion in our own function explicitly marked
+-- IMMUTABLE. This is safe here because we only care about the label text,
+-- not enum ordering/comparison semantics.
+create or replace function public.fn_competition_category_to_text(val public.competition_category)
+returns text language sql immutable as $$
+  select val::text;
+$$;
+
 create unique index if not exists idx_submission_windows_unique_active
-  on public.submission_windows(coalesce(competition_category::text, 'all'), round)
+  on public.submission_windows(coalesce(public.fn_competition_category_to_text(competition_category), 'all'), round)
   where is_active = true;
 
 create or replace function public.fn_touch_updated_at()
