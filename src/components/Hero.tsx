@@ -44,7 +44,7 @@ const CountdownTimer = () => {
       return target;
     };
 
-    let target = computeTarget();
+    const target = computeTarget();
     const timer = setInterval(() => {
       const now = new Date().getTime();
       const difference = target.getTime() - now;

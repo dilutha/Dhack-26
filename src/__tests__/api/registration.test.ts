@@ -1,17 +1,46 @@
+/**
+ * @jest-environment node
+ */
 import { POST } from '@/app/api/registration/route';
 import { NextRequest } from 'next/server';
 
 // Mock dependencies
+let teamsCallCount = 0;
+let currentResult: any = null;
+
+const mockBuilder = {
+  select: jest.fn().mockReturnThis(),
+  eq: jest.fn().mockReturnThis(),
+  in: jest.fn().mockReturnThis(),
+  ilike: jest.fn().mockReturnThis(),
+  limit: jest.fn().mockReturnThis(),
+  single: jest.fn().mockReturnThis(),
+  upsert: jest.fn().mockReturnThis(),
+  insert: jest.fn().mockReturnThis(),
+  then: jest.fn((onFulfilled) => {
+    return Promise.resolve(currentResult).then(onFulfilled);
+  }),
+};
+
 jest.mock('@/lib/supabaseServer', () => ({
   supabaseServer: {
-    from: jest.fn(() => ({
-      select: jest.fn(() => ({
-        in: jest.fn(() => Promise.resolve({ data: [], error: null })),
-      })),
-      insert: jest.fn(() =>
-        Promise.resolve({ data: { team_id: 'DH001' }, error: null })
-      ),
-    })),
+    from: jest.fn((table) => {
+      if (table === 'competitions') {
+        currentResult = { data: { id: 'competition-id' }, error: null };
+      } else if (table === 'teams') {
+        teamsCallCount++;
+        if (teamsCallCount === 1) {
+          currentResult = { data: [], error: null };
+        } else {
+          currentResult = { data: { team_id: 'DH001' }, error: null };
+        }
+      } else if (table === 'institutions') {
+        currentResult = { data: { id: 'institution-id' }, error: null };
+      } else if (table === 'team_members') {
+        currentResult = { error: null };
+      }
+      return mockBuilder;
+    }),
   },
 }));
 
@@ -35,50 +64,47 @@ jest.mock('@/lib/email', () => ({
 }));
 
 describe('/api/registration', () => {
+  let CSRFService: any;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    teamsCallCount = 0;
+    currentResult = null;
+    CSRFService = require('@/lib/csrf').CSRFService;
+    CSRFService.validateCSRFToken.mockResolvedValue(true);
   });
 
   it('should register a team successfully', async () => {
     const requestBody = {
-      bis: 'other',
+      competition_category: 'inter_university',
       team_name: 'Test Team',
-      university: 'Test University',
+      institution_name: 'Test University',
       members: [
         {
           full_name: 'John Doe',
-          name_with_initials: 'J. Doe',
-          nic: '123456789V',
-          university_reg_no: '12345',
-          faculty: 'Engineering',
-          academic_year: 2,
           email: 'john@test.com',
           whatsapp_number: '0771234567',
-          linkedin_profile: 'https://linkedin.com/in/john',
+          faculty: 'Engineering',
+          degree_program: 'Software Engineering',
+          student_id: '12345',
           is_leader: true,
         },
         {
           full_name: 'Jane Smith',
-          name_with_initials: 'J. Smith',
-          nic: '987654321V',
-          university_reg_no: '67890',
-          faculty: 'Engineering',
-          academic_year: 2,
           email: 'jane@test.com',
           whatsapp_number: '0777654321',
-          linkedin_profile: 'https://linkedin.com/in/jane',
+          faculty: 'Engineering',
+          degree_program: 'Software Engineering',
+          student_id: '67890',
           is_leader: false,
         },
         {
           full_name: 'Bob Johnson',
-          name_with_initials: 'B. Johnson',
-          nic: '456789123V',
-          university_reg_no: '11111',
-          faculty: 'Engineering',
-          academic_year: 2,
           email: 'bob@test.com',
           whatsapp_number: '0771111111',
-          linkedin_profile: 'https://linkedin.com/in/bob',
+          faculty: 'Engineering',
+          degree_program: 'Software Engineering',
+          student_id: '11111',
           is_leader: false,
         },
       ],
@@ -104,13 +130,12 @@ describe('/api/registration', () => {
   });
 
   it('should reject invalid CSRF token', async () => {
-    const { CSRFService } = require('@/lib/csrf');
-    CSRFService.validateCSRFToken.mockReturnValue(false);
+    CSRFService.validateCSRFToken.mockResolvedValue(false);
 
     const requestBody = {
-      bis: 'other',
+      competition_category: 'inter_university',
       team_name: 'Test Team',
-      university: 'Test University',
+      institution_name: 'Test University',
       members: [],
       recaptchaToken: 'valid-token',
       csrfToken: 'invalid-csrf-token',
@@ -129,14 +154,14 @@ describe('/api/registration', () => {
     const data = await response.json();
 
     expect(response.status).toBe(400);
-    expect(data.error).toBe('Invalid CSRF token');
+    expect(data.error).toBe('Invalid CSRF token. Please refresh the page and try again.');
   });
 
   it('should reject invalid team data', async () => {
     const requestBody = {
-      bis: 'other',
+      competition_category: 'inter_university',
       team_name: '', // Invalid: empty team name
-      university: 'Test University',
+      institution_name: 'Test University',
       members: [], // Invalid: no members
       recaptchaToken: 'valid-token',
       csrfToken: 'valid-csrf-token',

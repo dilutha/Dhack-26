@@ -92,6 +92,12 @@ export class CSRFService {
   }
 
   static async validateCSRFToken(request: NextRequest): Promise<boolean> {
+    // In development, bypass CSRF validation because hot-reload wipes the
+    // in-memory token store, causing all previously-issued tokens to be invalid.
+    if (process.env.NODE_ENV !== 'production') {
+      return true;
+    }
+
     const token = await this.getCSRFTokenFromRequest(request);
 
     if (!token) {

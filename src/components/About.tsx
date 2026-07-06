@@ -40,7 +40,7 @@ const About = () => {
                   Join Community Group
                 </a>
                 <a
-                  href='https://drive.google.com/drive/folders/1XqcSoQPnSrH9Mz_U_3V0UfKtrdXsdoMe?usp=sharing'
+                  href='https://drive.google.com/drive/folders/1V211enZfweYGta1_wjLV1sCfZAbALPJ6?usp=sharing'
                   target='_blank'
                   rel='noopener noreferrer'
                   className='w-full px-6 py-3 rounded-xl bg-muted text-foreground border border-border shadow-sm tech-label text-center hover:bg-muted/80 transition-colors relative z-30 mobile-touch-button'
@@ -119,7 +119,7 @@ const About = () => {
 
                 </a>
                 <a
-                  href='https://drive.google.com/drive/folders/1XqcSoQPnSrH9Mz_U_3V0UfKtrdXsdoMe?usp=sharing'
+                  href='https://drive.google.com/drive/folders/1V211enZfweYGta1_wjLV1sCfZAbALPJ6?usp=sharing'
                   target='_blank'
                   rel='noopener noreferrer'
                   className='w-full sm:w-auto px-4 sm:px-6 py-3 rounded-xl bg-muted text-foreground border border-border shadow-sm tech-label text-center hover:bg-muted/80 transition-colors'

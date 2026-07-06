@@ -35,3 +35,18 @@ process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co';
 process.env.SUPABASE_SERVICE_ROLE_KEY = 'test-service-key';
 process.env.JWT_SECRET = 'test-jwt-secret';
 process.env.CSRF_SECRET = 'test-csrf-secret';
+
+// Expose native web APIs in Jest's jsdom context
+if (typeof global.Request === 'undefined') {
+  global.Request = globalThis.Request;
+}
+if (typeof global.Response === 'undefined') {
+  global.Response = globalThis.Response;
+}
+if (typeof global.Headers === 'undefined') {
+  global.Headers = globalThis.Headers;
+}
+if (typeof global.fetch === 'undefined') {
+  global.fetch = globalThis.fetch;
+}
+

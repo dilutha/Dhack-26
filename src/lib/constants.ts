@@ -113,7 +113,7 @@ export const CONTACT = {
   phone: '+94 77 261 5050',
   email: 'avindigetawakanda@gmail.com',
   whatsapp:
-    'https://chat.whatsapp.com/BTTmYsMJV2N65GU40vMDoe?s=cl&p=i&mlu=3',
+    'https://chat.whatsapp.com/KK32rw7lU1Z7VIgdc1xLdr',
   personas: [
     {
       role: 'Co-Chairperson - DHack',
@@ -125,7 +125,7 @@ export const CONTACT = {
       role: 'PR and Delegates Crew Head',
       name: 'Minoli Fernando',
       phone: '0765449807',
-      email: '',
+      email: 'official.dhack2026@gmail.com',
     },
   ],
   social: {

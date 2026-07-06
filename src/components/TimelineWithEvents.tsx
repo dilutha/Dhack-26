@@ -55,20 +55,14 @@ const TimelineWithEvents: React.FC = () => {
         </motion.div>
 
         <div className='relative mx-auto max-w-5xl'>
-          <div className='absolute left-5 top-4 bottom-4 w-px bg-gradient-to-b from-dhack-orange via-dhack-teal to-dhack-accent md:left-1/2 md:-translate-x-1/2' />
+          {/* Vertical center line */}
+          <div className='absolute left-5 top-0 bottom-0 w-px bg-gradient-to-b from-dhack-orange via-dhack-teal to-dhack-accent md:left-1/2 md:-translate-x-1/2' />
 
-          <div className='space-y-8'>
+          <div className='space-y-10'>
             {events.map((event, index) => {
               const Icon = icons[index] || CalendarDays;
               const isRebrand = event.category === 'rebrand';
-              const markerSide =
-                index % 2 === 0
-                  ? 'md:right-[-4.35rem]'
-                  : 'md:left-[-4.35rem]';
-              const markerRingSide =
-                index % 2 === 0
-                  ? 'md:right-[-4.55rem]'
-                  : 'md:left-[-4.55rem]';
+              const isEven = index % 2 === 0;
 
               return (
                 <motion.article
@@ -77,46 +71,53 @@ const TimelineWithEvents: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
                   transition={{ duration: 0.45, delay: index * 0.06 }}
-                  className={`relative pl-14 md:grid md:grid-cols-2 md:gap-12 md:pl-0 ${
-                    index % 2 === 0 ? '' : 'md:[&>div:first-child]:col-start-2'
-                  }`}
+                  className='relative flex items-start pl-14 md:pl-0'
                 >
-                  <motion.div
-                    whileHover={{ y: -4, scale: 1.01 }}
-                    className={`group relative rounded-lg border p-5 shadow-lg backdrop-blur-sm transition-all duration-300 ${
-                      isRebrand
-                        ? 'border-dhack-accent/40 bg-dhack-accent/10 hover:border-dhack-accent'
-                        : 'border-dhack-teal/30 bg-background/80 hover:border-dhack-orange/70'
-                    }`}
-                  >
-                    <div
-                      className={`absolute -left-[2.85rem] top-5 flex h-10 w-10 items-center justify-center rounded-full border border-dhack-teal/40 bg-background text-dhack-teal shadow-lg md:left-auto ${markerRingSide}`}
-                    />
-                    <div
-                      className={`absolute -left-[2.65rem] top-6 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-dhack-orange to-dhack-teal text-white shadow-lg md:left-auto ${markerSide}`}
-                    >
+                  {/* Icon marker — centered on the vertical line */}
+                  <div className='absolute left-5 top-5 z-10 -translate-x-1/2 md:left-1/2'>
+                    {/* Ring */}
+                    <div className='absolute inset-0 -m-1 rounded-full border border-dhack-teal/40 bg-background shadow-lg' />
+                    {/* Icon circle */}
+                    <div className='relative flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-dhack-orange to-dhack-teal text-white shadow-lg'>
                       <Icon className='h-4 w-4' aria-hidden='true' />
                     </div>
+                  </div>
 
-                    <div className='mb-4 flex items-center justify-between gap-4'>
-                      <span className='rounded-md border border-dhack-orange/30 bg-dhack-orange/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-dhack-orange'>
-                        {event.displayDate}
-                      </span>
-                      <span className='text-xs font-medium text-muted-foreground'>
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
-                    </div>
-                    <h3 className='text-xl font-heading font-semibold text-foreground'>
-                      {event.name}
-                    </h3>
-                    <p className='mt-3 text-sm leading-6 text-muted-foreground'>
-                      {event.description}
-                    </p>
-                  </motion.div>
+                  {/* Card — alternates left/right on desktop */}
+                  <div
+                    className={`w-full md:w-[calc(50%-2.5rem)] ${
+                      isEven ? 'md:mr-auto md:pr-4' : 'md:ml-auto md:pl-4'
+                    }`}
+                  >
+                    <motion.div
+                      whileHover={{ y: -4, scale: 1.01 }}
+                      className={`group rounded-lg border p-5 shadow-lg backdrop-blur-sm transition-all duration-300 ${
+                        isRebrand
+                          ? 'border-dhack-accent/40 bg-dhack-accent/10 hover:border-dhack-accent'
+                          : 'border-dhack-teal/30 bg-background/80 hover:border-dhack-orange/70'
+                      }`}
+                    >
+                      <div className='mb-4 flex items-center justify-between gap-4'>
+                        <span className='rounded-md border border-dhack-orange/30 bg-dhack-orange/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-dhack-orange'>
+                          {event.displayDate}
+                        </span>
+                        <span className='text-xs font-medium text-muted-foreground'>
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                      </div>
+                      <h3 className='text-xl font-heading font-semibold text-foreground'>
+                        {event.name}
+                      </h3>
+                      <p className='mt-3 text-sm leading-6 text-muted-foreground'>
+                        {event.description}
+                      </p>
+                    </motion.div>
+                  </div>
                 </motion.article>
               );
             })}
           </div>
+
         </div>
       </div>
     </section>

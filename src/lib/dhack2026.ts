@@ -2,7 +2,7 @@ export const DHACK_2026_MISSION =
   'Our mission is to cultivate a culture of innovation among school students and university participants by empowering them to solve real-world challenges through creativity, collaboration, and human-centered design. Through the integration of Artificial Intelligence and a commitment to global sustainability goals, we inspire the next generation to create meaningful digital solutions for a better future.';
 
 export const WHATSAPP_COMMUNITY_URL =
-  'https://chat.whatsapp.com/BTTmYsMJV2N65GU40vMDoe?s=cl&p=i&mlu=3';
+  'https://chat.whatsapp.com/KK32rw7lU1Z7VIgdc1xLdr';
 
 export type CompetitionCategory =
   | 'inter_university'
