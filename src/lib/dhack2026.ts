@@ -121,7 +121,7 @@ export const FAQS_2026 = [
   {
     question: 'What are the team size requirements?',
     answer:
-      'Inter-University teams need 3-5 members. InterSchool and ReBrand teams must have exactly 5 members.',
+      'Inter-University teams must have exactly 3 members. InterSchool and ReBrand teams must have exactly 5 members.',
   },
   {
     question: 'What deliverables are required for submission?',
