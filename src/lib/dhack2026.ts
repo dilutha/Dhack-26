@@ -25,7 +25,7 @@ export const COMPETITIONS: Record<
 > = {
   inter_university: {
     id: 'inter_university',
-    title: 'Inter-University Hackathon',
+    title: 'Inter-University - Innovation',
     shortTitle: 'University',
     description:
       'For undergraduate teams from recognized universities building AI-assisted digital solutions for real-world challenges.',
@@ -41,7 +41,7 @@ export const COMPETITIONS: Record<
   },
   inter_school: {
     id: 'inter_school',
-    title: 'InterSchool Hackathon',
+    title: 'InterSchool - Innovation',
     shortTitle: 'School',
     description:
       'A school-level innovation track for student teams guided by a teacher and supported by parent or guardian contact details.',
