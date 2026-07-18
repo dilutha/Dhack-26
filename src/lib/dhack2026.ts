@@ -81,8 +81,8 @@ export const SRI_LANKA_TIME_ZONE = 'Asia/Colombo';
 
 export const DHACK_2026_CONFIG = {
   registrationOpenAt: '2026-07-08T00:00:00+05:30',
-  registrationCloseAt: '2026-07-20T00:00:00+05:30',
-  countdownTargetAt: '2026-07-20T00:00:00+05:30',
+  registrationCloseAt: '2026-07-25T00:00:00+05:30',
+  countdownTargetAt: '2026-07-25T00:00:00+05:30',
   currentRound: 'registration',
   maintenanceMode: false,
   maintenanceMessage:
