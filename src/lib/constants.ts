@@ -5,7 +5,7 @@ export const COLORS = {
   accent: '#28A7A9',
 };
 
-export const COUNTDOWN_TARGET = '2026-07-20T00:00:00+05:30';
+export const COUNTDOWN_TARGET = '2026-07-25T00:00:00+05:30';
 
 export const DEV_MODE =
   process.env.NODE_ENV === 'development' ||
@@ -13,20 +13,20 @@ export const DEV_MODE =
 
 export const ROUND_DATES = {
   round1: {
-    start: '2026-08-01T00:00:00+05:30',
-    end: '2026-08-07T23:59:59+05:30',
+    start: '2026-07-31T00:00:00+05:30',
+    end: '2026-08-04T23:59:59+05:30',
     title: 'Round 1: Proposal',
     description: 'Submit your problem, AI approach, SDG alignment, and concept.',
   },
   round2: {
-    start: '2026-08-23T00:00:00+05:30',
-    end: '2026-08-29T23:59:59+05:30',
+    start: '2026-08-20T00:00:00+05:30',
+    end: '2026-08-27T23:59:59+05:30',
     title: 'Round 2: Wireframes',
     description: 'Submit user flows, wireframes, and early design evidence.',
   },
   round3: {
-    start: '2026-09-12T00:00:00+05:30',
-    end: '2026-09-18T23:59:59+05:30',
+    start: '2026-09-10T00:00:00+05:30',
+    end: '2026-09-12T23:59:59+05:30',
     title: 'Round 3: Final UI/UX',
     description: 'Submit final prototype, presentation, and demo materials.',
   },
@@ -48,13 +48,13 @@ export const TIMELINE = [
     location: 'Online',
   },
   {
-    date: '2026-07-20',
+    date: '2026-07-25',
     title: 'Registration Closes',
     phase: 'registration',
     location: 'Online',
   },
   {
-    date: '2026-08-01',
+    date: '2026-07-31',
     title: 'First Round',
     phase: 'round1',
     location: 'Online',
@@ -72,7 +72,7 @@ export const TIMELINE = [
     location: 'Online',
   },
   {
-    date: '2026-09-15',
+    date: '2026-09-10',
     title: 'ReBrand Hackathon',
     phase: 'rebrand',
     location: 'Online',

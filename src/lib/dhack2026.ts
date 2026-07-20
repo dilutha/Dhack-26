@@ -95,20 +95,20 @@ export const DHACK_2026_SUBMISSION_WINDOWS = [
   {
     round: 1,
     label: 'Round 1',
-    opens_at: '2026-08-01T00:00:00+05:30',
-    closes_at: '2026-08-07T23:59:59+05:30',
+    opens_at: '2026-07-31T00:00:00+05:30',
+    closes_at: '2026-08-03T23:59:59+05:30',
   },
   {
     round: 2,
     label: 'Round 2',
-    opens_at: '2026-08-23T00:00:00+05:30',
-    closes_at: '2026-08-29T23:59:59+05:30',
+    opens_at: '2026-08-20T00:00:00+05:30',
+    closes_at: '2026-08-27T23:59:59+05:30',
   },
   {
     round: 3,
     label: 'Final Round',
-    opens_at: '2026-09-12T00:00:00+05:30',
-    closes_at: '2026-09-18T23:59:59+05:30',
+    opens_at: '2026-09-10T00:00:00+05:30',
+    closes_at: '2026-09-12T23:59:59+05:30',
   },
 ] as const;
 
@@ -156,9 +156,9 @@ export const DHACK_2026_EVENTS = [
     description: 'Final day for Inter-University, InterSchool, and ReBrand registrations.',
     category: 'innovation',
     type: 'registration',
-    start_at: '2026-07-20T00:00:00+05:30',
-    end_at: '2026-07-20T23:59:59+05:30',
-    displayDate: '20 July 2026',
+    start_at: '2026-07-25T00:00:00+05:30',
+    end_at: '2026-07-25T23:59:59+05:30',
+    displayDate: '25 July 2026',
   },
   {
     id: 'dhack26-first-round',
@@ -166,9 +166,9 @@ export const DHACK_2026_EVENTS = [
     description: 'Initial judging round for registered DHACK 2026 teams.',
     category: 'innovation',
     type: 'proposal',
-    start_at: '2026-08-01T00:00:00+05:30',
-    end_at: '2026-08-01T23:59:59+05:30',
-    displayDate: '01 August 2026',
+    start_at: '2026-07-31T00:00:00+05:30',
+    end_at: '2026-07-31T23:59:59+05:30',
+    displayDate: '31 July 2026',
   },
   {
     id: 'dhack26-second-round',
