@@ -6,7 +6,8 @@ import { rateLimit } from '@/lib/rateLimit';
 const schema = z.object({
   cpms: z
     .array(z.string().regex(/^\d{5}$/))
-    .length(3, 'Exactly three CPM numbers required'),
+    .min(1, 'At least one CPM number required')
+    .max(5, 'At most five CPM numbers allowed'),
 });
 
 export async function POST(req: NextRequest) {

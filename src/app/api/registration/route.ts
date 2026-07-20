@@ -52,6 +52,54 @@ function normalizeInstitution(value: string) {
   return value.trim().replace(/\s+/g, ' ').toLowerCase();
 }
 
+function formatCpmNumber(value: string) {
+  const digits = value.replace(/\D/g, '');
+  return `cpm ${digits}`;
+}
+
+async function verifyRebrandBisCpms(
+  members: z.infer<typeof schema>['members']
+) {
+  const bisMembers = members.filter(member => member.is_bis);
+  const invalidMembers = bisMembers.filter(
+    member => !member.student_id || !/^\d{5}$/.test(member.student_id)
+  );
+  if (invalidMembers.length > 0) {
+    throw new ValidationError(
+      'BIS students must provide a valid 5-digit CPM number.'
+    );
+  }
+
+  if (bisMembers.length === 0) return;
+
+  const formattedCpms = bisMembers.map(member =>
+    formatCpmNumber(member.student_id!)
+  );
+  const uniqueCpms = Array.from(new Set(formattedCpms));
+  if (uniqueCpms.length !== formattedCpms.length) {
+    throw new ValidationError('Duplicate CPM numbers in the team.');
+  }
+
+  const { data, error } = await supabaseServer
+    .from('usj_bis_students')
+    .select('cpm_number')
+    .in('cpm_number', uniqueCpms);
+
+  if (error) {
+    throw new DatabaseError(error.message);
+  }
+
+  const verified = new Set(
+    (data ?? []).map((row: { cpm_number: string }) => row.cpm_number)
+  );
+  const missing = uniqueCpms.filter(cpm => !verified.has(cpm));
+  if (missing.length > 0) {
+    throw new ValidationError(
+      'One or more CPM numbers could not be verified for BIS students.'
+    );
+  }
+}
+
 function validateCategory(data: z.infer<typeof schema>) {
   const category = COMPETITIONS[data.competition_category];
   if (data.members.length < category.minMembers) {
@@ -116,9 +164,10 @@ function validateCategory(data: z.infer<typeof schema>) {
     if (data.institution_name !== USJ) {
       throw new ValidationError(`ReBrand is restricted to ${USJ}.`);
     }
-    if (data.members.filter(member => member.is_bis).length !== 3) {
+    const bisCount = data.members.filter(member => member.is_bis).length;
+    if (bisCount < 3 || bisCount > 5) {
       throw new ValidationError(
-        'ReBrand requires exactly 3 BIS students and 2 other FMSC members.'
+        'ReBrand requires between 3 and 5 BIS students.'
       );
     }
     for (const member of data.members) {
@@ -127,9 +176,16 @@ function validateCategory(data: z.infer<typeof schema>) {
           `All ReBrand members must belong to ${FMSC_FACULTY}.`
         );
       }
-      if (!member.department || !member.degree_program || !member.student_id) {
+      if (!member.department || !member.degree_program) {
         throw new ValidationError(
-          'Department, degree program, and registration number are required for ReBrand.'
+          'Department and degree program are required for ReBrand.'
+        );
+      }
+      if (!member.student_id) {
+        throw new ValidationError(
+          member.is_bis
+            ? 'CPM number is required for BIS students.'
+            : 'Registration number is required for ReBrand participants.'
         );
       }
       if (member.is_bis && member.department !== BIS_DEPARTMENT) {
@@ -167,6 +223,9 @@ export async function POST(req: NextRequest) {
       throw new ValidationError('Registration Closed');
     }
     validateCategory(data);
+    if (data.competition_category === 'rebrand') {
+      await verifyRebrandBisCpms(data.members);
+    }
 
     const ip =
       req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||

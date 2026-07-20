@@ -143,11 +143,11 @@ const formSchema = z
         });
       }
       const bisCount = data.members.filter(member => member.is_bis).length;
-      if (bisCount !== 3) {
+      if (bisCount < 3 || bisCount > 5) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           path: ['members'],
-          message: 'ReBrand requires exactly 3 BIS students and 2 other FMSC members.',
+          message: 'ReBrand requires between 3 and 5 BIS students.',
         });
       }
       data.members.forEach((member, index) => {
@@ -165,7 +165,7 @@ const formSchema = z
             message: 'Non-BIS ReBrand members must be from another FMSC department.',
           });
         }
-        for (const field of ['department', 'degree_program', 'student_id'] as const) {
+        for (const field of ['department', 'degree_program'] as const) {
           if (!member[field]) {
             ctx.addIssue({
               code: z.ZodIssueCode.custom,
@@ -173,6 +173,21 @@ const formSchema = z
               message: 'Required for ReBrand participants.',
             });
           }
+        }
+        if (!member.student_id) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['members', index, 'student_id'],
+            message: member.is_bis
+              ? 'CPM number is required for BIS students.'
+              : 'Registration number is required for ReBrand participants.',
+          });
+        } else if (member.is_bis && !/^\d{5}$/.test(member.student_id)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['members', index, 'student_id'],
+            message: 'BIS students must provide a valid 5-digit CPM number.',
+          });
         }
       });
     }
@@ -546,7 +561,15 @@ export default function RegistrationForm() {
                         <Field
                           control={control}
                           name={`members.${index}.student_id`}
-                          label={categoryId === 'rebrand' ? 'CPM NO' : 'Student ID'}
+                          label={
+                            categoryId === 'rebrand'
+                              ? watch(`members.${index}.is_bis`)
+                                ? 'CPM NO'
+                                : 'Registration number'
+                              : 'Student ID'
+                          }
+                          digitsOnly={categoryId === 'rebrand' && watch(`members.${index}.is_bis`)}
+                          maxDigits={categoryId === 'rebrand' && watch(`members.${index}.is_bis`) ? 5 : undefined}
                         />
                       </>
                     )}
@@ -555,21 +578,32 @@ export default function RegistrationForm() {
                         <Controller
                           control={control}
                           name={`members.${index}.is_bis`}
-                          render={({ field }) => (
-                            <input
-                              type='checkbox'
-                              checked={field.value}
-                              onChange={event => {
-                                field.onChange(event.target.checked);
-                                if (event.target.checked) {
-                                  setValue(
-                                    `members.${index}.department`,
+                          render={({ field }) => {
+                            const bisCount = members.filter(member => member.is_bis).length;
+                            return (
+                              <input
+                                type='checkbox'
+                                checked={field.value}
+                                disabled={!field.value && bisCount >= 5}
+                                onChange={event => {
+                                  const checked = event.target.checked;
+                                  if (checked && bisCount >= 5) return;
+                                  field.onChange(checked);
+                                  if (checked) {
+                                    setValue(
+                                      `members.${index}.department`,
+                                      BIS_DEPARTMENT
+                                    );
+                                  } else if (
+                                    watch(`members.${index}.department`) ===
                                     BIS_DEPARTMENT
-                                  );
-                                }
-                              }}
-                            />
-                          )}
+                                  ) {
+                                    setValue(`members.${index}.department`, '');
+                                  }
+                                }}
+                              />
+                            );
+                          }}
                         />
                         BIS student
                       </label>
@@ -660,6 +694,7 @@ function Field({
   type = 'text',
   disabled,
   digitsOnly,
+  maxDigits = 10,
 }: {
   control: any;
   name: any;
@@ -667,6 +702,7 @@ function Field({
   type?: string;
   disabled?: boolean;
   digitsOnly?: boolean;
+  maxDigits?: number;
 }) {
   return (
     <div>
@@ -683,7 +719,7 @@ function Field({
             onChange={event =>
               field.onChange(
                 digitsOnly
-                  ? event.target.value.replace(/\D/g, '').slice(0, 10)
+                  ? event.target.value.replace(/\D/g, '').slice(0, maxDigits)
                   : event.target.value
               )
             }
