@@ -100,7 +100,7 @@ export function getCtaForEvent(event: HackEvent | null): {
     return { text: 'View Schedule', href: '#timeline' };
   }
   const typeToText: Record<EventType, string> = {
-    registration: 'Register Now',
+    registration: 'Registration Closed',
     proposal: 'Submit Your Proposal',
     wireframe: 'Submit Your Wireframe & Prototype',
     final: 'Submit Your Presentation',
@@ -121,7 +121,11 @@ export function getCtaForEvent(event: HackEvent | null): {
     'final',
     'announcement',
   ];
-  const href = allowedForSubmit.includes(event.type) ? '/submit' : '#timeline';
+  const href = allowedForSubmit.includes(event.type)
+    ? event.type === 'registration'
+      ? '#timeline'
+      : '/round-01-submission'
+    : '#timeline';
   return { text, href };
 }
 

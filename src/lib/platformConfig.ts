@@ -9,6 +9,7 @@ import { supabaseServer } from '@/lib/supabaseServer';
 export type PlatformSettings = {
   registrationOpenAt: string;
   registrationCloseAt: string;
+  registrationEnabled: boolean;
   countdownTargetAt: string;
   currentRound: string;
   maintenanceMode: boolean;
@@ -29,6 +30,7 @@ export type SubmissionWindow = {
 export const fallbackSettings: PlatformSettings = {
   registrationOpenAt: DHACK_2026_CONFIG.registrationOpenAt,
   registrationCloseAt: DHACK_2026_CONFIG.registrationCloseAt,
+  registrationEnabled: DHACK_2026_CONFIG.registrationEnabled,
   countdownTargetAt: DHACK_2026_CONFIG.countdownTargetAt,
   currentRound: DHACK_2026_CONFIG.currentRound,
   maintenanceMode: DHACK_2026_CONFIG.maintenanceMode,
@@ -74,6 +76,10 @@ export async function getPlatformSettings(): Promise<PlatformSettings> {
       registrationCloseAt: settingString(
         map.get('registration_close_at'),
         fallbackSettings.registrationCloseAt
+      ),
+      registrationEnabled: settingBoolean(
+        map.get('registration_enabled'),
+        fallbackSettings.registrationEnabled
       ),
       countdownTargetAt: settingString(
         map.get('countdown_target_at'),

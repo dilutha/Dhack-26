@@ -48,6 +48,7 @@ export default function RoundSubmissionForm({
     'upcoming' | 'open' | 'closed'
   >('closed');
   const [windowLabel, setWindowLabel] = useState('');
+  const [submittedAt, setSubmittedAt] = useState<string | null>(null);
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
   const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
@@ -69,6 +70,7 @@ export default function RoundSubmissionForm({
     reset({ team_name: '', school_name: '', submission_link: '' });
     setMessage(null);
     setError(null);
+    setSubmittedAt(null);
   }, [roundId, category, reset]);
 
   useEffect(() => {
@@ -158,7 +160,8 @@ export default function RoundSubmissionForm({
       return;
     }
 
-    setMessage('Submission received successfully.');
+    setSubmittedAt(data?.submitted_at || new Date().toISOString());
+    setMessage(`Round ${roundId.toString().padStart(2, '0')} submission received successfully.`);
     reset({ team_name: '', school_name: '', submission_link: '' });
   };
 
@@ -231,7 +234,16 @@ export default function RoundSubmissionForm({
           )}
 
           {error && <div className='text-sm text-red-400'>{error}</div>}
-          {message && <div className='text-sm text-dhack-teal'>{message}</div>}
+          {message && (
+            <div className='rounded-lg border border-dhack-teal/30 bg-dhack-teal/10 p-3 text-sm text-dhack-teal'>
+              <p className='font-semibold'>{message}</p>
+              {submittedAt && (
+                <p className='mt-1 text-xs text-muted-foreground'>
+                  Submitted at {new Date(submittedAt).toLocaleString()}
+                </p>
+              )}
+            </div>
+          )}
 
           <Button
             type='submit'

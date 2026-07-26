@@ -184,7 +184,7 @@ export async function POST(req: NextRequest) {
         submission_link: sanitizeForDbString(data.submission_link, 512),
         status: 'pending',
       })
-      .select('id')
+      .select('id, submitted_at')
       .single();
     if (insertError) {
       return NextResponse.json({ error: insertError.message }, { status: 400 });
@@ -193,6 +193,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       ok: true,
       submission_id: (submission as any).id,
+      submitted_at: (submission as any).submitted_at,
       message: 'Submission received successfully.',
     });
   } catch (error) {

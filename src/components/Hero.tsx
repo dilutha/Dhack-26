@@ -10,7 +10,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 // Countdown Timer Component
 const CountdownTimer = () => {
-  const [label, setLabel] = useState<string>('');
+  const [label, setLabel] = useState<string>('Round 01 Submission Deadline');
   const [closed, setClosed] = useState(false);
   const [targetIso, setTargetIso] = useState(DHACK_2026_CONFIG.countdownTargetAt);
   const [timeLeft, setTimeLeft] = useState({
@@ -38,19 +38,13 @@ const CountdownTimer = () => {
   }, []);
 
   useEffect(() => {
-    const computeTarget = () => {
-      const target = new Date(targetIso);
-      setLabel('Registration Closing');
-      return target;
-    };
-
-    const target = computeTarget();
+    const target = new Date(targetIso);
     const timer = setInterval(() => {
       const now = new Date().getTime();
       const difference = target.getTime() - now;
       if (difference <= 0) {
         setClosed(true);
-        setLabel('Registration Closed');
+        setLabel('Round 01 Submission Closed');
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
         clearInterval(timer);
         return;
@@ -72,7 +66,7 @@ const CountdownTimer = () => {
     <div className='mt-6'>
       {closed ? (
         <div className='rounded-lg border border-red-400/30 bg-red-500/10 p-4 text-center font-semibold text-red-300'>
-          Registration Closed
+          Round 01 Submission Closed
         </div>
       ) : label && (
         <div className='text-center text-sm text-muted-foreground mb-2'>
@@ -286,7 +280,7 @@ const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [robotInteractionEnabled, setRobotInteractionEnabled] = useState(false);
   const [inView, setInView] = useState(true);
-  const [registrationClosed, setRegistrationClosed] = useState(false);
+  const [submissionClosed, setSubmissionClosed] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -321,20 +315,20 @@ const Hero = () => {
   }, []);
 
   const onCtaClick = () => {
-    if (registrationClosed) return;
-    window.location.href = '/registration';
+    if (submissionClosed) return;
+    window.location.href = '/round-01-submission';
   };
 
   useEffect(() => {
     let mounted = true;
-    const update = (closeIso = DHACK_2026_CONFIG.registrationCloseAt) => {
-      if (mounted) setRegistrationClosed(Date.now() >= new Date(closeIso).getTime());
+    const update = (closeIso = DHACK_2026_CONFIG.countdownTargetAt) => {
+      if (mounted) setSubmissionClosed(Date.now() >= new Date(closeIso).getTime());
     };
     const load = async () => {
       try {
         const res = await fetch('/api/config', { cache: 'no-store' });
         const json = await res.json();
-        update(json?.settings?.registrationCloseAt);
+        update(json?.settings?.countdownTargetAt);
       } catch {
         update();
       }
@@ -468,10 +462,10 @@ const Hero = () => {
             variant='gradient'
             size='lg'
             onClick={onCtaClick}
-            disabled={registrationClosed}
+            disabled={submissionClosed}
             className='text-sm px-8 py-4 '
           >
-            {registrationClosed ? 'Registration Closed' : 'Register Now'}
+            {submissionClosed ? 'Round 01 Submission Closed' : 'Submit Round 01'}
           </Button>
         </div>
 
@@ -674,10 +668,10 @@ const Hero = () => {
                 variant='gradient'
                 size='lg'
                 onClick={onCtaClick}
-                disabled={registrationClosed}
+                disabled={submissionClosed}
                 className='text-lg px-8 py-4'
               >
-                {registrationClosed ? 'Registration Closed' : 'Register Now'}
+                {submissionClosed ? 'Round 01 Submission Closed' : 'Submit Round 01'}
               </Button>
             </div>
           </div>

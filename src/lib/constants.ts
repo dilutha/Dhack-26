@@ -5,7 +5,7 @@ export const COLORS = {
   accent: '#28A7A9',
 };
 
-export const COUNTDOWN_TARGET = '2026-07-25T00:00:00+05:30';
+export const COUNTDOWN_TARGET = '2026-08-01T23:55:55+05:30';
 
 export const DEV_MODE =
   process.env.NODE_ENV === 'development' ||
@@ -13,8 +13,8 @@ export const DEV_MODE =
 
 export const ROUND_DATES = {
   round1: {
-    start: '2026-07-31T00:00:00+05:30',
-    end: '2026-08-04T23:59:59+05:30',
+    start: '2026-07-26T00:00:00+05:30',
+    end: '2026-08-01T23:55:55+05:30',
     title: 'Round 1: Proposal',
     description: 'Submit your problem, AI approach, SDG alignment, and concept.',
   },
@@ -48,14 +48,14 @@ export const TIMELINE = [
     location: 'Online',
   },
   {
-    date: '2026-07-25',
+    date: '2026-07-26',
     title: 'Registration Closes',
     phase: 'registration',
     location: 'Online',
   },
   {
-    date: '2026-07-31',
-    title: 'First Round',
+    date: '2026-07-26',
+    title: 'Round 01 Submission',
     phase: 'round1',
     location: 'Online',
   },

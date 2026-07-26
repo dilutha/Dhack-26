@@ -81,9 +81,10 @@ export const SRI_LANKA_TIME_ZONE = 'Asia/Colombo';
 
 export const DHACK_2026_CONFIG = {
   registrationOpenAt: '2026-07-08T00:00:00+05:30',
-  registrationCloseAt: '2026-07-25T00:00:00+05:30',
-  countdownTargetAt: '2026-07-25T00:00:00+05:30',
-  currentRound: 'registration',
+  registrationCloseAt: '2026-07-26T00:00:00+05:30',
+  registrationEnabled: false,
+  countdownTargetAt: '2026-08-01T23:55:55+05:30',
+  currentRound: 'round_01_submission',
   maintenanceMode: false,
   maintenanceMessage:
     "We're making DHACK better. Please check back soon.",
@@ -95,8 +96,8 @@ export const DHACK_2026_SUBMISSION_WINDOWS = [
   {
     round: 1,
     label: 'Round 1',
-    opens_at: '2026-07-31T00:00:00+05:30',
-    closes_at: '2026-08-03T23:59:59+05:30',
+    opens_at: '2026-07-26T00:00:00+05:30',
+    closes_at: '2026-08-01T23:55:55+05:30',
   },
   {
     round: 2,
@@ -153,22 +154,22 @@ export const DHACK_2026_EVENTS = [
   {
     id: 'dhack26-registration-closed',
     name: 'Registration Closed',
-    description: 'Final day for Inter-University, InterSchool, and ReBrand registrations.',
+    description: 'Registration has been completed for DHACK 2026.',
     category: 'innovation',
     type: 'registration',
-    start_at: '2026-07-25T00:00:00+05:30',
-    end_at: '2026-07-25T23:59:59+05:30',
-    displayDate: '25 July 2026',
+    start_at: '2026-07-26T00:00:00+05:30',
+    end_at: '2026-07-26T00:00:00+05:30',
+    displayDate: 'Completed',
   },
   {
     id: 'dhack26-first-round',
-    name: 'First Round',
-    description: 'Initial judging round for registered DHACK 2026 teams.',
+    name: 'Round 01 Submission',
+    description: 'Registered teams submit Round 01 deliverables through the official submission portal.',
     category: 'innovation',
     type: 'proposal',
-    start_at: '2026-07-31T00:00:00+05:30',
-    end_at: '2026-07-31T23:59:59+05:30',
-    displayDate: '31 July 2026',
+    start_at: '2026-07-26T00:00:00+05:30',
+    end_at: '2026-08-01T23:55:55+05:30',
+    displayDate: '26 July - 01 August 2026',
   },
   {
     id: 'dhack26-second-round',

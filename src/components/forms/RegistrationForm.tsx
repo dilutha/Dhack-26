@@ -285,7 +285,11 @@ export default function RegistrationForm() {
       try {
         const res = await fetch('/api/config', { cache: 'no-store' });
         const json = await res.json();
-        updateClosed(json?.settings?.registrationCloseAt);
+        if (json?.settings?.registrationEnabled === false) {
+          setRegistrationClosed(true);
+        } else {
+          updateClosed(json?.settings?.registrationCloseAt);
+        }
       } catch {
         updateClosed();
       }

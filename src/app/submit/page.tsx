@@ -10,15 +10,6 @@ import Footer from '@/components/Footer';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import dynamic from 'next/dynamic';
 import { CompetitionCategory } from '@/lib/dhack2026';
-const RegistrationForm = dynamic(
-  () => import('@/components/forms/RegistrationForm'),
-  {
-    ssr: false,
-    loading: () => (
-      <div className='p-4 text-center'>Loading registration form...</div>
-    ),
-  }
-);
 const RoundSubmissionForm = dynamic(
   () => import('@/components/forms/RoundSubmissionForm'),
   {
@@ -38,7 +29,7 @@ const ResultsCheck = dynamic(() => import('@/components/forms/ResultsCheck'), {
 type TopTab = CompetitionCategory | 'registration' | 'results';
 
 export default function SubmitPage() {
-  const [activeTab, setActiveTab] = useState<TopTab>('registration');
+  const [activeTab, setActiveTab] = useState<TopTab>('inter_university');
   const [activeRound, setActiveRound] = useState<1 | 2 | 3>(1);
 
   useEffect(() => {
@@ -72,13 +63,6 @@ export default function SubmitPage() {
           {/* Mobile: Horizontal scroll */}
           <div className='flex gap-3 overflow-x-auto pb-2 sm:hidden'>
             <Button
-              variant={activeTab === 'registration' ? 'default' : 'outline'}
-              className='flex-shrink-0 rounded-xl px-6'
-              onClick={() => setActiveTab('registration')}
-            >
-              Registration
-            </Button>
-            <Button
               variant={activeTab === 'inter_university' ? 'default' : 'outline'}
               className='flex-shrink-0 rounded-xl px-6'
               onClick={() => setActiveTab('inter_university')}
@@ -108,14 +92,7 @@ export default function SubmitPage() {
             </Button>
           </div>
           {/* Desktop: Grid layout */}
-          <div className='hidden sm:grid sm:grid-cols-5 gap-4'>
-            <Button
-              variant={activeTab === 'registration' ? 'default' : 'outline'}
-              className='w-full rounded-xl'
-              onClick={() => setActiveTab('registration')}
-            >
-              Registration
-            </Button>
+          <div className='hidden sm:grid sm:grid-cols-4 gap-4'>
             <Button
               variant={activeTab === 'inter_university' ? 'default' : 'outline'}
               className='w-full rounded-xl'
@@ -228,17 +205,9 @@ export default function SubmitPage() {
               <CardTitle className='text-xl'>Registration</CardTitle>
             </CardHeader>
             <CardContent>
-              <ErrorBoundary>
-                <Suspense
-                  fallback={
-                    <div className='p-4 text-center'>
-                      Loading registration form...
-                    </div>
-                  }
-                >
-                  <RegistrationForm />
-                </Suspense>
-              </ErrorBoundary>
+              <div className='rounded-lg border border-red-400/30 bg-red-500/10 p-4 text-center font-semibold text-red-300'>
+                Registration Closed
+              </div>
             </CardContent>
           </Card>
         )}

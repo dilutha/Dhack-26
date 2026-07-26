@@ -1,22 +1,11 @@
 'use client';
 
 import React from 'react';
-import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { COMPETITIONS } from '@/lib/dhack2026';
-
-const RegistrationForm = dynamic(
-  () => import('@/components/forms/RegistrationForm'),
-  {
-    ssr: false,
-    loading: () => (
-      <div className='rounded-lg border border-dhack-teal/20 p-6 text-center text-muted-foreground'>
-        Loading registration form...
-      </div>
-    ),
-  }
-);
+import { Button } from '@/components/ui/button';
 
 export default function RegistrationPage() {
   return (
@@ -29,12 +18,15 @@ export default function RegistrationPage() {
               Official Registration
             </p>
             <h1 className='text-4xl md:text-5xl font-heading font-bold'>
-              DHACK&apos;26 <span className='gradient-text'>Registration</span>
+              DHACK&apos;26 <span className='gradient-text'>Registration Closed</span>
             </h1>
             <p className='mx-auto mt-5 max-w-3xl text-muted-foreground leading-7'>
-              Register your team for Inter-University, InterSchool, or ReBrand
-              Hackathon using the competition-specific flow below.
+              New registrations are no longer accepted. Registered teams should
+              use the Round 01 submission portal for deliverables.
             </p>
+            <Button asChild variant='gradient' size='lg' className='mt-8'>
+              <Link href='/round-01-submission'>Go to Round 01 Submission</Link>
+            </Button>
           </div>
 
           <div className='mb-8 grid gap-4 md:grid-cols-3'>
@@ -55,7 +47,9 @@ export default function RegistrationPage() {
             ))}
           </div>
 
-          <RegistrationForm />
+          <div className='rounded-lg border border-red-400/30 bg-red-500/10 p-6 text-center font-semibold text-red-300'>
+            Registration Closed
+          </div>
         </div>
       </section>
       <Footer />

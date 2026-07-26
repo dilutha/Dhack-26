@@ -6,10 +6,11 @@ import { CalendarDays, CheckCircle2, Clock, Flag, Sparkles } from 'lucide-react'
 import { DHACK_2026_EVENTS } from '@/lib/dhack2026';
 import { HackEvent } from '@/lib/eventUtils';
 
+const fallbackEvents = DHACK_2026_EVENTS as unknown as (HackEvent & {
+  displayDate?: string;
+})[];
+
 const TimelineWithEvents: React.FC = () => {
-  const fallbackEvents = DHACK_2026_EVENTS as unknown as (HackEvent & {
-    displayDate?: string;
-  })[];
   const [events, setEvents] = useState(fallbackEvents);
   const icons = [CalendarDays, Clock, Flag, CheckCircle2, Sparkles, Sparkles];
 
@@ -63,6 +64,12 @@ const TimelineWithEvents: React.FC = () => {
               const Icon = icons[index] || CalendarDays;
               const isRebrand = event.category === 'rebrand';
               const isEven = index % 2 === 0;
+              const now = Date.now();
+              const start = new Date(event.start_at).getTime();
+              const end = new Date(event.end_at).getTime();
+              const state =
+                now > end ? 'Completed' : now >= start ? 'Active' : 'Upcoming';
+              const isActive = state === 'Active';
 
               return (
                 <motion.article
@@ -101,8 +108,16 @@ const TimelineWithEvents: React.FC = () => {
                         <span className='rounded-md border border-dhack-orange/30 bg-dhack-orange/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-dhack-orange'>
                           {event.displayDate}
                         </span>
-                        <span className='text-xs font-medium text-muted-foreground'>
-                          {String(index + 1).padStart(2, '0')}
+                        <span
+                          className={`rounded-md px-2 py-1 text-xs font-semibold ${
+                            isActive
+                              ? 'bg-dhack-teal/15 text-dhack-teal'
+                              : state === 'Completed'
+                                ? 'bg-green-500/10 text-green-300'
+                                : 'bg-muted/20 text-muted-foreground'
+                          }`}
+                        >
+                          {state}
                         </span>
                       </div>
                       <h3 className='text-xl font-heading font-semibold text-foreground'>

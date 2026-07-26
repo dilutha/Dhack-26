@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, GraduationCap, School, Sparkles } from 'lucide-react';
+import { ArrowRight, GraduationCap, School, Sparkles, UploadCloud } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { COMPETITIONS, DHACK_2026_CONFIG } from '@/lib/dhack2026';
 
@@ -14,20 +14,20 @@ const icons = {
 };
 
 export default function RegistrationSection() {
-  const [registrationClosed, setRegistrationClosed] = useState(false);
+  const [submissionClosed, setSubmissionClosed] = useState(false);
 
   useEffect(() => {
     let mounted = true;
-    const update = (closeAt = DHACK_2026_CONFIG.registrationCloseAt) => {
+    const update = (closeAt = DHACK_2026_CONFIG.countdownTargetAt) => {
       if (mounted) {
-        setRegistrationClosed(Date.now() >= new Date(closeAt).getTime());
+        setSubmissionClosed(Date.now() >= new Date(closeAt).getTime());
       }
     };
     const load = async () => {
       try {
         const res = await fetch('/api/config', { cache: 'no-store' });
         const json = await res.json();
-        update(json?.settings?.registrationCloseAt);
+        update(json?.settings?.countdownTargetAt);
       } catch {
         update();
       }
@@ -48,23 +48,26 @@ export default function RegistrationSection() {
             viewport={{ once: true, margin: '-80px' }}
           >
             <p className='mb-3 text-sm font-semibold uppercase tracking-wide text-dhack-orange'>
-              Registration
+              Round 01 Submission
             </p>
             <h2 className='text-4xl md:text-5xl font-heading font-bold'>
-              Register for <span className='gradient-text'>DHACK&apos;26</span>
+              Submit your <span className='gradient-text'>Round 01</span> work
             </h2>
             <p className='mt-5 max-w-xl text-muted-foreground leading-7'>
-              Choose your competition track and submit your team details through
-              the official DHACK&apos;26 registration flow.
+              Registration is closed. Registered teams can now upload their
+              Round 01 Google Drive deliverables before the official deadline.
             </p>
-            {registrationClosed ? (
+            <div className='mt-5 rounded-lg border border-dhack-teal/25 bg-dhack-teal/10 px-5 py-3 font-semibold text-dhack-teal'>
+              Registration Closed
+            </div>
+            {submissionClosed ? (
               <div className='mt-8 rounded-lg border border-red-400/30 bg-red-500/10 px-5 py-3 font-semibold text-red-300'>
-                Registration Closed
+                Round 01 Submission Closed
               </div>
             ) : (
               <Button asChild variant='gradient' size='lg' className='mt-8 gap-2'>
-                <Link href='/registration'>
-                  Register Now
+                <Link href='/round-01-submission'>
+                  Submit Round 01
                   <ArrowRight className='h-4 w-4' aria-hidden='true' />
                 </Link>
               </Button>
@@ -85,7 +88,11 @@ export default function RegistrationSection() {
                   className='rounded-lg border border-dhack-teal/25 bg-background/70 p-5 backdrop-blur-sm'
                 >
                   <div className='mb-4 flex h-11 w-11 items-center justify-center rounded-lg bg-dhack-teal/15 text-dhack-teal'>
-                    <Icon className='h-5 w-5' aria-hidden='true' />
+                    {submissionClosed ? (
+                      <Icon className='h-5 w-5' aria-hidden='true' />
+                    ) : (
+                      <UploadCloud className='h-5 w-5' aria-hidden='true' />
+                    )}
                   </div>
                   <h3 className='font-heading text-lg font-semibold text-foreground'>
                     {competition.shortTitle}
@@ -95,16 +102,16 @@ export default function RegistrationSection() {
                       ? `Exactly ${competition.exactMembers} members`
                       : `${competition.minMembers}-${competition.maxMembers} members`}
                   </p>
-                  {registrationClosed ? (
+                  {submissionClosed ? (
                     <p className='mt-4 text-sm font-medium text-red-300'>
-                      Registration Closed
+                      Submission Closed
                     </p>
                   ) : (
                     <Link
-                      href='/registration'
+                      href='/round-01-submission'
                       className='mt-4 inline-flex items-center gap-2 text-sm font-medium text-dhack-orange hover:text-dhack-teal'
                     >
-                      Start registration
+                      Submit Round 01
                       <ArrowRight className='h-4 w-4' aria-hidden='true' />
                     </Link>
                   )}

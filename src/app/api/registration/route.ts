@@ -219,7 +219,10 @@ export async function POST(req: NextRequest) {
 
     const data = parsed.data;
     const settings = await getPlatformSettings();
-    if (Date.now() >= new Date(settings.registrationCloseAt).getTime()) {
+    if (
+      !settings.registrationEnabled ||
+      Date.now() >= new Date(settings.registrationCloseAt).getTime()
+    ) {
       throw new ValidationError('Registration Closed');
     }
     validateCategory(data);
