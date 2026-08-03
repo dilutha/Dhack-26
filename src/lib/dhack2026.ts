@@ -83,7 +83,7 @@ export const DHACK_2026_CONFIG = {
   registrationOpenAt: '2026-07-08T00:00:00+05:30',
   registrationCloseAt: '2026-07-26T00:00:00+05:30',
   registrationEnabled: false,
-  countdownTargetAt: '2026-08-01T23:55:55+05:30',
+  countdownTargetAt: '2026-08-03T23:59:59+05:30',
   currentRound: 'round_01_submission',
   maintenanceMode: false,
   maintenanceMessage:
@@ -97,7 +97,7 @@ export const DHACK_2026_SUBMISSION_WINDOWS = [
     round: 1,
     label: 'Round 1',
     opens_at: '2026-07-26T00:00:00+05:30',
-    closes_at: '2026-08-01T23:55:55+05:30',
+    closes_at: '2026-08-03T23:59:59+05:30',
   },
   {
     round: 2,
@@ -168,8 +168,8 @@ export const DHACK_2026_EVENTS = [
     category: 'innovation',
     type: 'proposal',
     start_at: '2026-07-26T00:00:00+05:30',
-    end_at: '2026-08-01T23:55:55+05:30',
-    displayDate: '26 July - 01 August 2026',
+    end_at: '2026-08-03T23:59:59+05:30',
+    displayDate: '26 July - 03 August 2026',
   },
   {
     id: 'dhack26-second-round',

@@ -5,7 +5,7 @@ export const COLORS = {
   accent: '#28A7A9',
 };
 
-export const COUNTDOWN_TARGET = '2026-08-01T23:55:55+05:30';
+export const COUNTDOWN_TARGET = '2026-08-03T23:59:59+05:30';
 
 export const DEV_MODE =
   process.env.NODE_ENV === 'development' ||
@@ -14,7 +14,7 @@ export const DEV_MODE =
 export const ROUND_DATES = {
   round1: {
     start: '2026-07-26T00:00:00+05:30',
-    end: '2026-08-01T23:55:55+05:30',
+    end: '2026-08-03T23:59:59+05:30',
     title: 'Round 1: Proposal',
     description: 'Submit your problem, AI approach, SDG alignment, and concept.',
   },
